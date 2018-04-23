@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521229363464.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1407159450",
+    "id" : "11E3DE4C",
+    "lastKnownWriteTime" : 1523820075,
+    "last_content_update" : 1523820075369,
+    "path" : "~/Documents/GitHub/Md_Gov_Analysis/Gov_data_analysis.R",
+    "project_path" : "Gov_data_analysis.R",
+    "properties" : {
+        "cursorPosition" : "1035,0",
+        "scrollLine" : "1034"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

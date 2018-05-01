@@ -2070,3 +2070,237 @@ count_ross_contribs <- ross_state_list_fromzips %>%
   #arrange the list in descending order
   arrange(desc(count)) 
 count_ross_contribs[1:10,]
+
+
+
+
+
+
+
+
+# Sean Mussenden queries below here #
+
+# Data check and exploration #
+
+summary(cleaned_contributions_new)
+
+# A look at value distribution by column #
+
+receiving_committee <- cleaned_contributions_new %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contribution_type <- cleaned_contributions_new %>%
+  group_by(`Contribution Type`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+filing_period <- cleaned_contributions_new %>%
+  group_by(`Filing Period`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contribution_date <- cleaned_contributions_new %>%
+  group_by(`Contribution Date`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contribution_name <- cleaned_contributions_new %>%
+  group_by(`Contributor Name`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contributor_address <- cleaned_contributions_new %>%
+  group_by(`Contributor Address`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contributor_type <- cleaned_contributions_new %>%
+  group_by(`Contributor Type`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contribution_type <- cleaned_contributions_new %>%
+  group_by(`Contribution Type`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contributor_type <- cleaned_contributions_new %>%
+  group_by(`Contributor Type`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+contribution_amount <- cleaned_contributions_new %>%
+  group_by(`Contribution Amount`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+employer_name <- cleaned_contributions_new %>%
+  group_by(`Employer Name`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+employer_occupation <- cleaned_contributions_new %>%
+  group_by(`Employer Occupation`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+office <- cleaned_contributions_new %>%
+  group_by(`Office`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+fundtype <- cleaned_contributions_new %>%
+  group_by(`Fundtype`) %>%
+  summarise(count=n()) %>%
+  arrange(desc(`count`))
+
+# creating data frames for specific queries
+
+contribs_indv_biz <- cleaned_contributions_new %>%
+  filter(`Contributor Type` == "Business/Group/Organization" | `Contributor Type` == "Individual") %>%
+  filter(`Contribution Type` != "Refund/Rebate") %>%
+  filter(`Contribution Type` != "Coordinated In-Kind")
+
+# filter(str_detect(`Contributor Type`, "Spouse"))
+
+# Bar chart: total dollar amount from contributions from people or businesses/groups/organizations less than or equal to $250 for each candidate. 
+
+total_sum_under_250 <- contribs_indv_biz %>%
+  filter(`Contribution Amount` <= 250) %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(total_sum = sum(`Contribution Amount`)) %>%
+  arrange(desc(`total_sum`))
+write_csv(total_sum_under_250, path="export/total_sum_under_250.csv")
+
+# Bar chart: total number of distinct contributions from people or businesses/groups/organizations less than or equal to $250 for each candidate. 
+
+total_contribs_count <- contribs_indv_biz %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(count = n()) %>%
+  arrange(desc(`count`))
+write_csv(total_count_under_250, path="export/total_count_under_250.csv")
+
+# Bar chart: total dollar amount from contributions from people or businesses/groups/organizations greater than or equal to $2500 for each candidate. 
+
+total_sum_over_2500 <- contribs_indv_biz %>%
+  filter(`Contribution Amount` >= 2500) %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(total_sum = sum(`Contribution Amount`)) %>%
+  arrange(desc(`total_sum`))
+write_csv(total_sum_over_2500, path="export/total_sum_over_2500.csv")
+
+# Bar chart: mean contribution from people or businesses/groups/organizations for each candidate. 
+
+mean_contribution <- contribs_indv_biz %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(mean = mean(`Contribution Amount`)) %>%
+  arrange(desc(`mean`))
+write_csv(mean_contribution, path="export/mean_contribution.csv")
+
+# Layered Pie Chart: percentage of contributors to Jim Shea from different employers, only including people who included an employer. 
+
+shea_employers <- contribs_indv_biz %>%
+  filter(!is.na(`Employer Name`)) %>%
+  filter(`Receiving Committee` == "Jim Shea For Maryland") %>%
+  group_by(`Employer Name`) %>%
+  summarise(count = n()) %>%
+  mutate(freq = count/sum(count))%>%
+  arrange(desc(freq))
+write_csv(shea_employers, path="export/shea_employers.csv")
+
+
+# Small multiple maps of Kamenetz, Baker and Madaleno, showing total contributions by zip code.  With a dot showing where they’re from. 
+
+# Extract things that look like zip codes as a list 
+contributions_all_zips1 <- stri_extract_all_regex(contribs_indv_biz$`Contributor Address`, "(?<!\\d)(\\d{5}(?:[-\\s]\\d{4})?)\\b")
+contributions_all_5digitzips <- stri_extract_all_regex(contributions_all_zips1, "\\d{5}")
+contributions_all_zips2 <- map(contributions_all_5digitzips, function(x) x[length(x)])
+
+# Turn it back into a dataframe
+contributions_all_zipz_df <- data_frame(contributions_all_zips2)
+# Convert the column in our dataframe
+contributions_all_zipz_df %>% mutate_if(is.list, as.character) -> contributions_all_zipz_df
+# Change the column header 
+colnames(contributions_all_zipz_df)[which(names(contributions_all_zipz_df) == "contributions_all_zips2")] <- "zip_codes"
+#binds it back to the master data set
+newall_contribswithzips <- cbind(contributions_all_zipz_df, contribs_indv_biz)
+
+#load the database of zip codes/state information 
+data(zipcode)
+
+#merge the zipcode list with our master data to get state information 
+allcontribs_state_list_fromzips <-  left_join(newall_contribswithzips, zipcode, by =c("zip_codes" = "zip"))
+
+
+# Pull out only maryland contributors
+all_contribs_from_maryland <- allcontribs_state_list_fromzips %>% 
+  filter(state == "MD")
+
+# KK
+kk_by_zipcode_md <- all_contribs_from_maryland %>%
+  filter(str_detect(`Receiving Committee`, "Kevin")) %>%
+  group_by(`zip_codes`) %>%
+  summarise(total =sum(`Contribution Amount`) ) %>%
+  arrange(desc(`total`))
+write_csv(kk_by_zipcode_md,path="export/kk_by_zipcode_md.csv")
+
+# RB
+rb_by_zipcode_md <- all_contribs_from_maryland %>%
+  filter(str_detect(`Receiving Committee`, "Baker")) %>%
+  group_by(`zip_codes`) %>%
+  summarise(total =sum(`Contribution Amount`) ) %>%
+  arrange(desc(`total`))
+write_csv(rb_by_zipcode_md,path="export/rb_by_zipcode_md.csv")
+
+# RM
+rm_by_zipcode_md <- all_contribs_from_maryland %>%
+  filter(str_detect(`Receiving Committee`, "Madaleno")) %>%
+  group_by(`zip_codes`) %>%
+  summarise(total =sum(`Contribution Amount`) ) %>%
+  arrange(desc(`total`))
+write_csv(rm_by_zipcode_md,path="export/rm_by_zipcode_md.csv")
+
+# Matrix Chart with in-state and out-state for each candidate.
+
+in_state_by_candidate <- allcontribs_state_list_fromzips %>%
+  filter(state == "MD") %>%
+  filter(!is.na(state)) %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(in_state_total=sum(`Contribution Amount`)) %>%
+  arrange(desc(`in_state_total`))
+
+out_state_by_candidate <- allcontribs_state_list_fromzips %>%
+  filter(state != "MD") %>%
+  filter(!is.na(state)) %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(out_state_total=sum(`Contribution Amount`)) %>%
+  arrange(desc(`out_state_total`))
+
+total_by_candidate <- allcontribs_state_list_fromzips %>%
+  filter(!is.na(state)) %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(total=sum(`Contribution Amount`)) %>%
+  arrange(desc(`total`))
+
+in_v_out_state_by_candidate <- left_join(in_state_by_candidate,out_state_by_candidate,by="Receiving Committee")
+
+in_v_out_state_by_candidate <- left_join(in_v_out_state_by_candidate, total_by_candidate, by="Receiving Committee")
+
+in_v_out_state_by_candidate <- in_v_out_state_by_candidate %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(total = sum(total),
+            in_state_total = sum(in_state_total),
+            out_state_total = sum(out_state_total),
+            total_check = sum(out_state_total + in_state_total),
+            in_state_percentage = sum(in_state_total/total),
+            out_state_percentage = sum(out_state_total/total)
+  )
+write_csv(in_v_out_state_by_candidate, path="export/in_v_out_state_by_candidate.csv")
+
+
+total_sum_over_1000 <- allcontribs_state_list_fromzips %>%
+  filter(`Contribution Amount` >= 1000) 
+ View(total_sum_over_1000)
+write_csv(total_sum_over_5000, path="export/total_sum_over_1000.csv")

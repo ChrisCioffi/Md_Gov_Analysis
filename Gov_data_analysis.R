@@ -2163,6 +2163,10 @@ contribs_indv_biz <- cleaned_contributions_new %>%
   filter(`Contribution Type` != "Refund/Rebate") %>%
   filter(`Contribution Type` != "Coordinated In-Kind")
 
+candidate_self_contrib <- cleaned_contributions_new %>%
+  filter(`Contributor Type` == "Self (Candidate)" |`Contributor Type` == "Spouse (Candidate)")
+
+
 # filter(str_detect(`Contributor Type`, "Spouse"))
 
 # Bar chart: total dollar amount from contributions from people or businesses/groups/organizations less than or equal to $250 for each candidate. 
@@ -2176,11 +2180,18 @@ write_csv(total_sum_under_250, path="export/total_sum_under_250.csv")
 
 # Bar chart: total number of distinct contributions from people or businesses/groups/organizations less than or equal to $250 for each candidate. 
 
+total_sum <- contribs_indv_biz %>%
+  group_by(`Receiving Committee`) %>%
+  summarise(total_sum = sum(`Contribution Amount`)) %>%
+  arrange(desc(`total_sum`))
+write_csv(total_sum, path="total_Sum.csv")
+
+
 total_contribs_count <- contribs_indv_biz %>%
   group_by(`Receiving Committee`) %>%
   summarise(count = n()) %>%
   arrange(desc(`count`))
-write_csv(total_count_under_250, path="export/total_count_under_250.csv")
+write_csv(total_contribs_count, path="export_total_count.csv")
 
 # Bar chart: total dollar amount from contributions from people or businesses/groups/organizations greater than or equal to $2500 for each candidate. 
 
@@ -2189,9 +2200,10 @@ total_sum_over_2500 <- contribs_indv_biz %>%
   group_by(`Receiving Committee`) %>%
   summarise(total_sum = sum(`Contribution Amount`)) %>%
   arrange(desc(`total_sum`))
-write_csv(total_sum_over_2500, path="export/total_sum_over_2500.csv")
+write_csv(total_sum_over_2500, path="total_sum_over_2500.csv")
 
 # Bar chart: mean contribution from people or businesses/groups/organizations for each candidate. 
+
 
 mean_contribution <- contribs_indv_biz %>%
   group_by(`Receiving Committee`) %>%
@@ -2210,6 +2222,14 @@ shea_employers <- contribs_indv_biz %>%
   arrange(desc(freq))
 write_csv(shea_employers, path="export/shea_employers.csv")
 
+
+shea_employers_names <- contribs_indv_biz %>%
+  filter(!is.na(`Employer Name`)) %>%
+  filter(`Receiving Committee` == "Jim Shea For Maryland") %>%
+  group_by(`Employer Occupation`) %>%
+  summarise(total_sum = sum(`Contribution Amount`)) %>%
+  arrange(desc(`total_sum`))
+write_csv(shea_employers_names, path="export/shea_employers.csv")
 
 # Small multiple maps of Kamenetz, Baker and Madaleno, showing total contributions by zip code.  With a dot showing where they’re from. 
 

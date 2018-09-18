@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537297739610.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "5D039A45",
+    "lastKnownWriteTime" : 3544388028350857222,
+    "last_content_update" : 1537297739610,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "D9D8CD38",
+        "caption" : "hogan_jealous",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=hogan_jealous&cache_key=D9D8CD38",
+        "displayedObservations" : 25,
+        "environment" : "",
+        "object" : "hogan_jealous",
+        "preview" : 0,
+        "totalObservations" : 25,
+        "variables" : 17
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

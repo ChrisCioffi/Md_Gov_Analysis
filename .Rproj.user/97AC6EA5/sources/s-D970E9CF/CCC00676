@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537289593825.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CCC00676",
+    "lastKnownWriteTime" : 4494360448,
+    "last_content_update" : 1537289593825,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "D7D12B95",
+        "caption" : "hogan_contributions",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=hogan_contributions&cache_key=D7D12B95",
+        "displayedObservations" : "41467",
+        "environment" : "",
+        "object" : "hogan_contributions",
+        "preview" : "0",
+        "totalObservations" : "41467",
+        "variables" : "17"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

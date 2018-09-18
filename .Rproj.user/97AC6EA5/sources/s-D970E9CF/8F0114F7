@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537291597912.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8F0114F7",
+    "lastKnownWriteTime" : 7367119559871954950,
+    "last_content_update" : 1537291597912,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "273BBF9E",
+        "caption" : "hogan_omalley",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=hogan_omalley&cache_key=273BBF9E",
+        "displayedObservations" : 717,
+        "environment" : "",
+        "object" : "hogan_omalley",
+        "preview" : 0,
+        "totalObservations" : 717,
+        "variables" : 17
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

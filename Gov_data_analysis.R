@@ -638,7 +638,7 @@ jealous_inkind_rebates_all <- cleaned_contributions_new  %>%
   #here we're creating a dataframe of all entries that have the receiving committee equaling jealous. And it excludes in-kind and refund/rebate information
   filter(`Receiving Committee` == "Jealous  Ben Friends of") %>%
   filter(`Contribution Type` == "In-Kind" | `Contribution Type` == "Refund/Rebate" | `Contribution Type` == "Coordinated In-Kind")
-View(jealous_inkind_rebates_all)
+
 
 
 ##############################2####################

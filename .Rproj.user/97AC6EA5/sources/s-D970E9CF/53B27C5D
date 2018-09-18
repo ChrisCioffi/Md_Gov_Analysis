@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1535652235643.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "53B27C5D",
+    "lastKnownWriteTime" : 1537297402,
+    "last_content_update" : 1537297402976,
+    "path" : "/GitHub/Md_Gov_Analysis/Aug_disclosure.R",
+    "project_path" : "Aug_disclosure.R",
+    "properties" : {
+        "cursorPosition" : "100,109",
+        "scrollLine" : "92",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

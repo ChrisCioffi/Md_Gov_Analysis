@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537296866599.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CD82947E",
+    "lastKnownWriteTime" : 8462108871446578486,
+    "last_content_update" : 1537296866599,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "BFC0170E",
+        "caption" : "count_hogan_states",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=count_hogan_states&cache_key=BFC0170E",
+        "displayedObservations" : 25,
+        "environment" : "",
+        "object" : "count_hogan_states",
+        "preview" : 0,
+        "totalObservations" : 25,
+        "variables" : 4
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

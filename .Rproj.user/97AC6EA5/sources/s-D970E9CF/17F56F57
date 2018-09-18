@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537297087577.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "17F56F57",
+    "lastKnownWriteTime" : 4353689464,
+    "last_content_update" : 1537297087577,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "8E8E26DD",
+        "caption" : "jealous_contributions",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=jealous_contributions&cache_key=8E8E26DD",
+        "displayedObservations" : 34370,
+        "environment" : "",
+        "object" : "jealous_contributions",
+        "preview" : 0,
+        "totalObservations" : 34370,
+        "variables" : 18
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

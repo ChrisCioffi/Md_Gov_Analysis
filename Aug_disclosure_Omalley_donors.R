@@ -24,8 +24,8 @@ sum(omalley_contributions$`Contribution Amount`, na.rm = T)
 
 all_contributions_new <- all_contributions %>% 
   #here we're creating a dataframe of all entries from the two receiving committees. It excludes in-kind and refund/rebate information
- # filter(`Contribution Type` != "In-Kind") %>%
-#  filter(`Contribution Type` != "Coordinated In-Kind") %>%
+  filter(`Contribution Type` != "In-Kind") %>%
+  filter(`Contribution Type` != "Coordinated In-Kind") %>%
   filter(`Contribution Type` != "Refund/Rebate")
 
 
@@ -88,6 +88,7 @@ omalley_contributions <- allcontribs_state_list_fromzips %>%
   filter(`Receiving Committee` == "O'Malley  Martin Friends Of" )
 
 #our the fields we will be joining on are contributor name and zip code
+?semi_join
 
 requirements <- c("Contributor Name", "zip_codes")
 
@@ -254,5 +255,6 @@ month_contributions <- month_contributions %>%
   mutate(month = format(month_contributions$`Contribution Date`, "%m"))
 
 
-
+  
+Thanks! 
     
